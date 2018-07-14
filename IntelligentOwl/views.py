@@ -12,4 +12,6 @@ def game_creation(requset):
 
 
 def team_creation(request):
-    return ""
+    return render(request, "./team_creation.html")
+
+
