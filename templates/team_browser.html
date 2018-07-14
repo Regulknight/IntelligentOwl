@@ -1,0 +1,37 @@
+{% include 'navigation.html' %}
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.fixed-action-btn');
+    var instances = M.FloatingActionButton.init(elems, options);
+  });
+</script>
+{% if team_list %}
+    <a href="team_editor.html" style="position:fixed; bottom: 3%;right: 1%" class="btn-floating btn-large waves-effect waves-light orange"><i class="material-icons">add</i></a>
+{% endif %}
+<div class="container">
+    {% if team_list %}
+        <div>
+            <ul class="collection">
+                {% for team in team_list %}
+                    <a class="collection-item black-text" style="font-size: 16px" href="/app/team/{{ team.id }}/">{{team}}</a>
+                {% endfor %}
+            </ul>
+        </div>
+    {% else %}
+        <div class="row">
+            <div class="col s12">
+                <div class="card white">
+                    <div class="card-content black-text">
+                        <span class="card-title">Упс, что-то пошло не так!</span>
+                        <p>В данный момент ни одна команда не зарегистрирована!</p>
+                    </div>
+                    <div class="card-action">
+                        <a href="./team_editor">Перейти к регистрации команды</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+</div>
