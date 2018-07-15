@@ -4,22 +4,27 @@ from django.db import models
 
 
 class GameParticipant(models.Model):
-    regId = models.IntegerField()
     name = models.CharField(max_length=255)
-
-    def __str__(self):
-        return str(self.regId) + ") " + self.name
 
 
 class Player(GameParticipant):
+    player_reg_id = models.IntegerField(unique=True)
     school = models.CharField(max_length=255)
-    birthday = models.DateField()
-    grade = models.IntegerField()
+    birthday = models.DateField(null=True)
+    grade = models.IntegerField(null=True)
     player_team = models.ForeignKey('Team', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.player_reg_id) + ") " + self.name
 
 
 class Team(GameParticipant):
+    team_reg_id = models.IntegerField(unique=True)
     league = models.CharField(max_length=255)
+    captain = models.OneToOneField(Player, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.team_reg_id) + ") " + self.name
 
 
 class Tour(models.Model):
