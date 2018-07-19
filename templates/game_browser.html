@@ -10,10 +10,10 @@
     <a href="{% url 'game_creation' %}" style="position:fixed; bottom: 3%;right: 1%" class="btn-floating btn-large waves-effect waves-light orange"><i class="material-icons">add</i></a>
 {% endif %}
 <div class="container">
-    {% if team_list %}
+    {% if game_list %}
         <div>
             <ul class="collection">
-                {% for team in team_list %}
+                {% for game in game_list %}
                     <a class="collection-item black-text" style="font-size: 16px" href="{% url 'game_details' game_id=game.id %}">{{ game }}</a>
                 {% endfor %}
             </ul>
@@ -24,14 +24,13 @@
                 <div class="card white">
                     <div class="card-content black-text">
                         <span class="card-title">Упс, что-то пошло не так!</span>
-                        <p>В данный момент ни одна команда не зарегистрирована!</p>
+                        <p>В данный момент ни одна игра не создана!</p>
                     </div>
                     <div class="card-action">
-                        <a href="{% url 'team_creation' %}">Перейти к регистрации команды</a>
+                        <a href="{% url 'game_creation' %}">Перейти к созданию игры</a>
                     </div>
                 </div>
             </div>
         </div>
     {% endif %}
-
 </div>

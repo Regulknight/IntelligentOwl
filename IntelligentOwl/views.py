@@ -3,8 +3,8 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.template import loader
 
-from IntelligentOwl.forms import TeamForm, PlayerForm
-from IntelligentOwl.models import Team, Player
+from IntelligentOwl.forms import TeamForm, PlayerForm, GameForm
+from IntelligentOwl.models import Team, Player, Game, Question, Tour
 
 
 def index(request):
@@ -12,11 +12,44 @@ def index(request):
 
 
 def game_browser(request):
-    return render(request, "./game_browser.html")
+    game_list = Game.objects.order_by('id')
+    template = loader.get_template('game_browser.html')
+    context = {
+        'game_list': game_list,
+    }
+    return HttpResponse(template.render(context, request))
 
 
 def game_creation(request):
-    return render(request, "./game_creation.html")
+    if request.method == 'POST':
+        form = GameForm(request.POST)
+        if form.is_valid():
+            game = form.save()
+            for i in range(game.tour_count):
+                tour = Tour.objects.create(game=game, order_number=i, questions_count=game.questions_count)
+                for j in range(tour.questions_count):
+                    Question.objects.create(tour=tour, order_number=j)
+            return redirect('game_browser')
+    else:
+        form = GameForm()
+    return render(request, "./game_creation.html", {'form': form})
+
+
+def game_details(request, game_id):
+    if request.method == 'POST':
+        form = GameForm(request.POST)
+        if 'delete' in form.data:
+            Game.objects.get(pk=game_id).delete()
+            return redirect('game_browser')
+        if form.is_valid():
+            form.save()
+            return redirect('game_browser')
+    else:
+        form = GameForm()
+        game = Game.objects.get(pk=game_id)
+        form.initial = {'name': game.name, 'tour_count': game.tour_count, 'questions_count': game.questions_count,
+                        'game_coefficient': game.game_coefficient}
+    return render(request, "./game_details.html", {'form': form})
 
 
 def team_details(request, team_id):

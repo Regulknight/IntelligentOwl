@@ -4,8 +4,9 @@ from IntelligentOwl import views
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('game_browser', views.game_browser, name='game_browser'),
-    path('game_creation', views.game_creation, name='game_creation'),
+    path('games', views.game_browser, name='game_browser'),
+    path('games/new', views.game_creation, name='game_creation'),
+    path('games/<int:game_id>/', views.game_details, name='game_details'),
     path('teams/<int:team_id>/', views.team_details, name='team_details'),
     path('teams', views.team_browser, name='team_browser'),
     path('teams/new', views.team_new, name='team_creation'),

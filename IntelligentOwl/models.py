@@ -34,8 +34,14 @@ class Tour(models.Model):
 
 
 class Game(models.Model):
-    participants = models.ManyToManyField(GameParticipant)
+    name = models.CharField(max_length=255)
+    tour_count = models.IntegerField()
+    questions_count = models.IntegerField()
     game_coefficient = models.FloatField()
+    participants = models.ManyToManyField(GameParticipant)
+
+    def __str__(self):
+        return self.name
 
 
 class TourEntry(models.Model):
@@ -43,9 +49,9 @@ class TourEntry(models.Model):
 
 
 class Question(models.Model):
-    value = models.FloatField()
-    rating = models.IntegerField()
-    orderNumber = models.IntegerField()
+    value = models.FloatField(null=True)
+    rating = models.IntegerField(null=True)
+    order_number = models.IntegerField()
     tour = models.ForeignKey(Tour, on_delete=models.CASCADE)
 
 
