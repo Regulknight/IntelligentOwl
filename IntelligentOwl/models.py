@@ -9,7 +9,6 @@ class GameParticipant(models.Model):
 
 class Player(GameParticipant):
     player_reg_id = models.IntegerField(unique=True)
-    school = models.CharField(max_length=255)
     birthday = models.DateField(null=True)
     grade = models.IntegerField(null=True)
     player_team = models.ForeignKey('Team', on_delete=models.CASCADE)
@@ -19,9 +18,10 @@ class Player(GameParticipant):
 
 
 class Team(GameParticipant):
-    team_reg_id = models.IntegerField(unique=True)
+    team_reg_id = models.IntegerField()
+    school = models.CharField(max_length=255, default="")
     league = models.CharField(max_length=255)
-    captain = models.OneToOneField(Player, on_delete=models.CASCADE)
+    captain = models.OneToOneField(Player, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return str(self.team_reg_id) + ") " + self.name

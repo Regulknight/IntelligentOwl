@@ -1,0 +1,67 @@
+{% load staticfiles %}
+{% include 'navigation.html' %}
+<body>
+<div class="container">
+    <form method="post">
+        <div class="card">
+            <div class="card-content black-text">
+                    <span class="card-title">
+                        Команда: {{ reg_id }}
+                    </span>
+                {% csrf_token %}
+                <div class="input-field fieldWrapper">
+                    {{ form.message.errors }}
+                    {{ form.name }}
+                    <label for="{{ form.name.id_for_label }}"> Название команды </label>
+                </div>
+                <div class="input-field">
+                    {{ form.message.errors }}
+                    {{ form.school }}
+                    <label for='{{ form.school.id_for_label }}'> Школа </label>
+                </div>
+                {% for player_form in player_formset %}
+                    {{ player_formset.management_form }}
+                    <div class="row">
+                        <div class="card">
+                            <div class="card-content">
+                                {% if forloop.counter == 1 %}
+                                    <span class="row card-title">Капитан</span>
+                                {% else %}
+                                    <span class="row card-title">Игрок {{ forloop.counter }}</span>
+                                {% endif %}
+                                <div>
+                                    <div class="input-field fieldWrapper">
+                                        {{ player_form.message.errors }}
+                                        {{ player_form.name }}
+                                        <label for="{{ player_form.name.id_for_label }}">Имя игрока</label>
+                                    </div>
+                                    <div class="input-field fieldWrapper">
+                                        {{ player_form.message.errors }}
+                                        {{ player_form.grade }}
+                                        <label for="{{ player_form.grade.id_for_label }}">Класс</label>
+                                    </div>
+                                    <div class="input-field fieldWrapper">
+                                        {{ player_form.message.errors }}
+                                        {{ player_form.birthday }}
+                                        <label for="{{ player_form.birthday.id_for_label }}">День рождения</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="card-action">
+                <button type="submit" name="done" class="btn btn-block white waves-effect black-text">Готово</button>
+                <button type="submit" name="save" class="btn btn-block white waves-effect black-text">Сохранить</button>
+                <button type="submit" name="save_and_create_next" class="btn btn-block white waves-effect black-text">
+                    Сохранить и перейти к созданию
+                    новой команды
+                </button>
+                <button type="submit" name="delete" class="btn btn-block red waves-effect black-text">Удалить</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="{% static 'InOwl/js/materialize.min.js' %}"></script>
+</body>

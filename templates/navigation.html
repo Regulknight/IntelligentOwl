@@ -5,9 +5,8 @@
 <div class="navbar-fixed">
     <nav>
         <div class="nav-wrapper white">
-            <a href="./" class="right brand-logo"><img src="{% static "/images/logo.png" %}" width="75" height="55"
+            <a href='{% url 'index' %}' class="right brand-logo"><img src="{% static "/images/logo.png" %}" width="75" height="55"
                                                        style="padding-right: 15%; padding-top: 10%"></a>
-
             <ul id="nav-mobile" class="left hide-on-med-and-down">
                 <li><a class="black-text" href="{% url 'team_browser' %}">Команды</a></li>
                 <li><a class="black-text" href="{% url 'game_browser' %}">Игры</a></li>

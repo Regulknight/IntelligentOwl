@@ -6,14 +6,14 @@
   });
 </script>
 {% if team_list %}
-    <a href="team_editor.html" style="position:fixed; bottom: 3%;right: 1%" class="btn-floating btn-large waves-effect waves-light orange"><i class="material-icons">add</i></a>
+    <a href="{% url 'team_creation' %}" style="position:fixed; bottom: 3%;right: 1%" class="btn-floating btn-large waves-effect waves-light orange"><i class="material-icons">add</i></a>
 {% endif %}
 <div class="container">
     {% if team_list %}
         <div>
             <ul class="collection">
                 {% for team in team_list %}
-                    <a class="collection-item black-text" style="font-size: 16px" href="/app/team/{{ team.id }}/">{{team}}</a>
+                    <a class="collection-item black-text" style="font-size: 16px" href="{% url 'team_details' team_id=team.id %}">{{ team }}</a>
                 {% endfor %}
             </ul>
         </div>
@@ -26,7 +26,7 @@
                         <p>В данный момент ни одна команда не зарегистрирована!</p>
                     </div>
                     <div class="card-action">
-                        <a href="./team_editor">Перейти к регистрации команды</a>
+                        <a href="{% url 'team_creation' %}">Перейти к регистрации команды</a>
                     </div>
                 </div>
             </div>
